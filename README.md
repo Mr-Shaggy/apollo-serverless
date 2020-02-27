@@ -1,2 +1,0 @@
-# apollo-serverless
-Begin app
