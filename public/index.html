@@ -42,10 +42,37 @@
     <!-- Example GraphQL query -->
     <script type=module>
       ;(async function() {
-      let query = `{hello}`
+      const allStudentsQuery =
+  `{
+      allStudents {
+        name {
+          first
+          last
+        }
+        dob
+        picture {
+          large
+        }
+        location {
+          street
+          city
+          state
+          postcode
+        }
+        phone
+        cell
+        email
+        major
+        gpa
+        sid
+        registered
+        modified
+        modifiedby
+      }
+    }`;
       let result = await fetch('/graphql', {
         method: 'post',
-        body: JSON.stringify({query}),
+        body: JSON.stringify({allStudentsQuery}),
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
           'Content-Type': 'application/json',
