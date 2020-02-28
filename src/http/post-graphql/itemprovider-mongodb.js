@@ -15,6 +15,7 @@ const errorResponse = { ok: false, error: 'Oops something went wrong!' }
 ItemProvider.prototype.open = function(cb) {
   MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
     if (err) {
+      this.err = err
       cb(err)
     } else {
       const db = client.db(C.name)
@@ -26,7 +27,12 @@ ItemProvider.prototype.open = function(cb) {
 
 // find items in collection
 ItemProvider.prototype.findItems = function ({ collection, query, limit, sort, fields }) {
-  const coll = this.db.collection(collection)
+  let coll = {}
+  try {
+    coll = this.db.collection(collection)
+  } catch(err) {
+    Promise.reject(this.err)
+  }
   return new Promise((resolve, reject) => {
     coll.find(query).project(fields).sort(sort || { _id: -1 }).limit(limit || 0).toArray((err, results) =>{
       if (err) {
