@@ -31,7 +31,7 @@ ItemProvider.prototype.findItems = function ({ collection, query, limit, sort, f
   try {
     coll = this.db.collection(collection)
   } catch(err) {
-    Promise.reject(this.err)
+    return Promise.reject(this.err)
   }
   return new Promise((resolve, reject) => {
     coll.find(query).project(fields).sort(sort || { _id: -1 }).limit(limit || 0).toArray((err, results) =>{
