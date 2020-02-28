@@ -72,7 +72,9 @@
     }`;
       let result = await fetch('/graphql', {
         method: 'post',
-        body: JSON.stringify({allStudentsQuery}),
+        body: JSON.stringify({
+          query: allStudentsQuery
+        }),
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
           'Content-Type': 'application/json',
